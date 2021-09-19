@@ -172,7 +172,7 @@ foreach ($customer in $M365Customers) {
                     azuretenantid = $customer.CustomerContextId
                 }
             
-                Write-Host "Setting $($M365Asset.company_name) - HaloID: $HaloID - TenantID $TenantID"
+                Write-Host "Setting $($Customer.DisplayName) - HaloID: $($matchedCompany.id) - TenantID $TenantID"
                 $Null = Set-HaloClient -Client $ClientUpdate
             }
 					
