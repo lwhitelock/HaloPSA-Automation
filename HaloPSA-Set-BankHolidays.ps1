@@ -7,7 +7,7 @@ $HaloURL = Get-AzKeyVaultSecret -VaultName $VaultName -Name "HaloURL" -AsPlainTe
 if (Get-Module -ListAvailable -Name HaloAPI) {
     Import-Module HaloAPI 
 } else {
-    Install-Module HuduAPI -Force
+    Install-Module HaloAPI -Force
     Import-Module HaloAPI
 }
 
