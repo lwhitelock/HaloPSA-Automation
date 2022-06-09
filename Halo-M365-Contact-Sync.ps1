@@ -162,7 +162,7 @@ try {
 	# Create / Retrieve the Contact Mapping Report
 	$HaloContactReport = @{
 		name                    = "Halo M3565 Contact PowerShell Script Report"
-		sql                     = "SELECT DISTINCT UAzureOID as 'azureoid',uemail as 'emailAddress',Usite as 'site_id',uusername as 'displayName',uid as 'id',uextn as 'phone',umobile as 'mobilePhone',uinactive as 'inactive',aarea as 'client_id',CFM365SyncKeepActive FROM [HaloPSA].[dbo].[USERS] LEFT JOIN site ON usite = ssitenum LEFT JOIN area ON sarea = aarea"
+		sql                     = "SELECT DISTINCT UAzureOID as 'azureoid',uemail as 'emailAddress',Usite as 'site_id',uusername as 'displayName',uid as 'id',uextn as 'phone',umobile as 'mobilePhone',uinactive as 'inactive',aarea as 'client_id',CFM365SyncKeepActive FROM USERS LEFT JOIN site ON usite = ssitenum LEFT JOIN area ON sarea = aarea"
 		description             = "This report is used to quickly obtain Contact / User IDs for use with the M365 Mapping Script"
 		type                    = 0
 		datasource_id           = 0
@@ -174,7 +174,7 @@ try {
 	# Create / Retrieve the Site Mapping Report
 	$HaloSiteReport = @{
 		name                    = "Halo M3565 Sites PowerShell Script Report"
-		sql                     = "SELECT DISTINCT ASSiteID as 'id', ASLine1 as 'line1', sarea as 'client_id' FROM [HaloPSA].[dbo].[ADDRESSSTORE] LEFT JOIN SITE on ASSiteID = SSiteNum Where sarea <> ''"
+		sql                     = "SELECT DISTINCT ASSiteID as 'id', ASLine1 as 'line1', sarea as 'client_id' FROM ADDRESSSTORE LEFT JOIN SITE on ASSiteID = SSiteNum Where sarea <> ''"
 		description             = "This report is used to quickly obtain site information for use with the M365 Mapping Script"
 		type                    = 0
 		datasource_id           = 0
