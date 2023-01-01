@@ -144,7 +144,7 @@ try {
 	$HaloAzureConnections = Get-HaloAzureADConnection -Type 2
 	$HaloM365CompanyMapping = $HaloAzureConnections | ForEach-Object {
 		$AZConnectionID = $_.id
-    (Get-HaloAzureADConnection -Type 2 -AzureConnectionID $AZConnectionID -IncludeDetails).mappings_client | Select-Object azure_tenant_id, azure_tenant_name, client_id, client_name
+    (Get-HaloAzureADConnection -Type 2 -AzureConnectionID $AZConnectionID -IncludeDetails -IncludeTenants).mappings_client | Select-Object azure_tenant_id, azure_tenant_name, client_id, client_name
 	}
 
 	# Create / Retrieve the Customer Mapping Report
@@ -259,7 +259,7 @@ foreach ($customer in $M365Customers) {
 						$matchedCompany = $HaloCompanies | Where-Object { $_.id -eq $matchedIDs }
 						Write-Host "Matched a verified domain to contacts domain" -ForegroundColor green
 					} else {
-						Write-Host "$($Customer.DisplayName) Could not be matched please set the Azure Tenant Id in the Halo company to $($customer.CustomerContextId)" -ForegroundColor red
+						Write-Host "$($Customer.DisplayName) Could not be matched please set the Azure Tenant Id in the Halo company to $($customer.CustomerId)" -ForegroundColor red
 						continue
 					}
 
@@ -276,13 +276,13 @@ foreach ($customer in $M365Customers) {
 			$ClientUpdate = @{
 				id            = $matchedCompany.id
 				azure_tenants = @(@{
-						azure_tenant_id   = $customer.CustomerContextId
+						azure_tenant_id   = $customer.CustomerId
 						azure_tenant_name = $customer.DisplayName
 						details_name      = 'Default'
 					})
 			}
 			
-			Write-Host "Setting $($M365Asset.company_name) - HaloID: $HaloID - TenantID $TenantID"
+			Write-Host "Setting $($M365Asset.company_name) - HaloID: $HaloID - TenantID $customer.CustomerId
 			$Null = Set-HaloClient -Client $ClientUpdate
 		}
 					
